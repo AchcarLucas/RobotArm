@@ -272,4 +272,5 @@ void loop() {
   for(short i = 0; i < QUANTIDADE_MOTORES; ++i) {
     motores[i]->update();
   }
+  delay(100);
 }
