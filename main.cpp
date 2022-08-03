@@ -18,7 +18,7 @@
 #define MOTOR_BASE 		5
 #define MOTOR_DIREITO 	6
 #define MOTOR_ESQUERDO	9
-#define MOTOR_GARRA		3
+#define MOTOR_GARRA		10
 
 // limites de ação do joystick
 
@@ -315,10 +315,10 @@ void setup() {
   Joystick *joystick_2 = new Joystick(JOYSTICK_X2, JOYSTICK_Y2);
   
   // associa cada motor com seu pino e seu joystick
-  motores[0] = new MotorBase(joystick_1, MOTOR_BASE, 0, 180);
-  motores[1] = new MotorDireito(joystick_2, MOTOR_DIREITO, 45, 135);
-  motores[2] = new MotorEsquerdo(joystick_2, MOTOR_ESQUERDO, 50, 90);
-  motores[3] = new MotorGarra(joystick_1, MOTOR_GARRA, 90, 130);
+  motores[0] = new MotorBase(joystick_1, MOTOR_BASE, 5, 175);
+  motores[1] = new MotorDireito(joystick_2, MOTOR_DIREITO, 80, 170);
+  motores[2] = new MotorEsquerdo(joystick_2, MOTOR_ESQUERDO, 60, 90);
+  motores[3] = new MotorGarra(joystick_1, MOTOR_GARRA, 80, 110);
 }
 
 void loop() {
