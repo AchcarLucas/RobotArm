@@ -257,7 +257,7 @@ void setup() {
   Serial.begin(9600);
   
   // cria o joystick 1 e o joystick 2
-  Joystick *joystick_1 = new Joystick(JOYSTICK_X1, A1);
+  Joystick *joystick_1 = new Joystick(JOYSTICK_X1, JOYSTICK_Y1);
   Joystick *joystick_2 = new Joystick(JOYSTICK_X2, JOYSTICK_Y2);
   
   // associa cada motor com seu pino e seu joystick
