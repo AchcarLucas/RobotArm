@@ -117,7 +117,6 @@ Motor::Motor(Joystick *joystick,
   // initializa todos os motores a 90º
   this->current_angle = 90;
   this->write(this->current_angle);
-  
 };
 
 void Motor::update() {
@@ -125,6 +124,9 @@ void Motor::update() {
 }
 
 void Motor::write(short angle) {
+  Serial.print("ANGLE: ");
+  Serial.println(angle);
+  
   this->s_motor.write(current_angle);
 }
 
@@ -179,12 +181,25 @@ void MotorBase::update() {
   short x = this->joystick->getX();
   short velocity = 0;
   
-  if(state == E_JOYSTICK::RIGHT && this->current_angle < this->top_angle)
-   	velocity = this->velocity_map(x, LIMIT_RIGHT, 1000, 0, 4);
-  else if(state == E_JOYSTICK::LEFT && this->current_angle > this->bottom_angle)
-  	velocity = this->velocity_map(x, 0, LIMIT_LEFT, -4, 0);
+  bool has_limit = false;
   
-  if(velocity != 0) {
+  if(state == E_JOYSTICK::RIGHT && this->current_angle < this->top_angle) {
+   	velocity = this->velocity_map(x, LIMIT_UP, 1000, 0, 4);
+    if(this->current_angle + velocity > this->top_angle) {
+      velocity = 0;
+      this->current_angle = this->top_angle;
+      has_limit = true;
+    }
+  } else if(state == E_JOYSTICK::LEFT && this->current_angle > this->bottom_angle) {
+  	velocity = this->velocity_map(x, 0, LIMIT_DOWN, -4, 0);
+    if(this->current_angle + velocity < this->bottom_angle) {
+      velocity = 0;
+      this->current_angle = this->bottom_angle;
+      has_limit = true;
+    }
+  }
+  
+  if(velocity != 0 || has_limit) {
   	Serial.print("VELOCITY_ANGLE (X - MotorBase): ");
   	Serial.println(velocity);
   
@@ -198,12 +213,25 @@ void MotorDireito::update() {
   short x = this->joystick->getX();
   short velocity = 0;
 
-  if(state == E_JOYSTICK::RIGHT && this->current_angle < this->top_angle)
-    velocity = this->velocity_map(x, LIMIT_RIGHT, 1000, 0, 4);
-  else if(state == E_JOYSTICK::LEFT && this->current_angle > this->bottom_angle)
-    velocity = this->velocity_map(x, 0, LIMIT_LEFT, -4, 0);
-
-    if(velocity != 0) {
+  bool has_limit = false;
+  
+ if(state == E_JOYSTICK::RIGHT && this->current_angle < this->top_angle) {
+   	velocity = this->velocity_map(x, LIMIT_UP, 1000, 0, 4);
+    if(this->current_angle + velocity > this->top_angle) {
+      velocity = 0;
+      this->current_angle = this->top_angle;
+      has_limit = true;
+    }
+  } else if(state == E_JOYSTICK::LEFT && this->current_angle > this->bottom_angle) {
+  	velocity = this->velocity_map(x, 0, LIMIT_DOWN, -4, 0);
+    if(this->current_angle + velocity < this->bottom_angle) {
+      velocity = 0;
+      this->current_angle = this->bottom_angle;
+      has_limit = true;
+    }
+  }
+  
+  if(velocity != 0 || has_limit) {
     Serial.print("VELOCITY_ANGLE (X - MotorDireito): ");
     Serial.println(velocity);
 
@@ -217,18 +245,31 @@ void MotorEsquerdo::update() {
   short y = this->joystick->getY();
   short velocity = 0;
   
-  if(state == E_JOYSTICK::UP && this->current_angle < this->top_angle)
-   	velocity = this->velocity_map(y, LIMIT_UP, 1000, 0, 4);
-  else if(state == E_JOYSTICK::DOWN && this->current_angle > this->bottom_angle)
-  	velocity = this->velocity_map(y, 0, LIMIT_DOWN, -4, 0);
+  bool has_limit = false;
   
-  if(velocity != 0) {
+  if(state == E_JOYSTICK::UP && this->current_angle < this->top_angle) {
+   	velocity = this->velocity_map(y, LIMIT_UP, 1000, 0, 4);
+    if(this->current_angle + velocity > this->top_angle) {
+      velocity = 0;
+      this->current_angle = this->top_angle;
+      has_limit = true;
+    }
+  } else if(state == E_JOYSTICK::DOWN && this->current_angle > this->bottom_angle) {
+  	velocity = this->velocity_map(y, 0, LIMIT_DOWN, -4, 0);
+    if(this->current_angle + velocity < this->bottom_angle) {
+      velocity = 0;
+      this->current_angle = this->bottom_angle;
+      has_limit = true;
+    }
+  }
+  
+  if(velocity != 0 || has_limit) {
   	Serial.print("VELOCITY_ANGLE (Y - MotorEsquerdo): ");
   	Serial.println(velocity);
   
   	this->current_angle += velocity;
   	this->write(this->current_angle);
-  } 
+  }
 }
 
 void MotorGarra::update() {
@@ -236,12 +277,25 @@ void MotorGarra::update() {
   short y = this->joystick->getY();
   short velocity = 0;
   
-  if(state == E_JOYSTICK::UP && this->current_angle < this->top_angle)
-   	velocity = this->velocity_map(y, LIMIT_UP, 1000, 0, 4);
-  else if(state == E_JOYSTICK::DOWN && this->current_angle > this->bottom_angle)
-  	velocity = this->velocity_map(y, 0, LIMIT_DOWN, -4, 0);
+  bool has_limit = false;
   
-  if(velocity != 0) {
+  if(state == E_JOYSTICK::UP && this->current_angle < this->top_angle) {
+   	velocity = this->velocity_map(y, LIMIT_UP, 1000, 0, 4);
+    if(this->current_angle + velocity > this->top_angle) {
+      velocity = 0;
+      this->current_angle = this->top_angle;
+      has_limit = true;
+    }
+  } else if(state == E_JOYSTICK::DOWN && this->current_angle > this->bottom_angle) {
+  	velocity = this->velocity_map(y, 0, LIMIT_DOWN, -4, 0);
+    if(this->current_angle + velocity < this->bottom_angle) {
+      velocity = 0;
+      this->current_angle = this->bottom_angle;
+      has_limit = true;
+    }
+  }
+  
+  if(velocity != 0 || has_limit) {
   	Serial.print("VELOCITY_ANGLE (Y - MotorGarra): ");
   	Serial.println(velocity);
   
