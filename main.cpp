@@ -262,9 +262,9 @@ void setup() {
   
   // associa cada motor com seu pino e seu joystick
   motores[0] = new MotorBase(joystick_1, MOTOR_BASE, 0, 180);
-  motores[1] = new MotorDireito(joystick_2, MOTOR_DIREITO, 0, 180);
-  motores[2] = new MotorEsquerdo(joystick_2, MOTOR_ESQUERDO, 0, 180);
-  motores[3] = new MotorGarra(joystick_1, MOTOR_GARRA, 0, 180);
+  motores[1] = new MotorDireito(joystick_2, MOTOR_DIREITO, 45, 135);
+  motores[2] = new MotorEsquerdo(joystick_2, MOTOR_ESQUERDO, 50, 90);
+  motores[3] = new MotorGarra(joystick_1, MOTOR_GARRA, 90, 130);
 }
 
 void loop() {
